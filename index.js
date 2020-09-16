@@ -30,7 +30,7 @@ bot.on('ready', () => {
 
 
 bot.on('message', message => {
-    let args = message.content.substring(PREFIX.length).split(" ");
+    let args = message.content.substring(PREFIX.length).trim().split(" ");
     console.log(args);
     if (!message.content.startsWith(PREFIX) || message.author.bot) return;
     if (message.content.startsWith(PREFIX)) {
@@ -103,17 +103,18 @@ bot.on('message', message => {
 
 function image(message) {
     var options = {
-        url: "http://results.dogpile.com/serp?qc=images&q=" + "dogs",
+        url: "https://yandex.com/images/search?text=" + "anime",
         method: "GET",
-        header: {
+        headers: {
             "Accept": "text/html",
             "User-Agent": "Chrome"
         }
     };
 
-    request(options, function (error, response, responseBody) {
-        if (error)
+    request(options, function(error, response, responseBody){
+        if (error){
             return;
+        }
 
         $ = cheerio.load(responseBody);
         var links = $(".image a.link");
