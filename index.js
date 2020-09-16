@@ -6,6 +6,17 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
 const ytdl = require("ytdl-core");
+const cheerio = require('cheerio');
+const request = require('request');
+const fs = require('fs');
+bot.commands = new Discord.Collection();
+
+const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
+for (const file of commandFiles) {
+    const command = require(`./commands/${file}`);
+
+    bot.commands.set(command.name, command);
+}
 
 var servers = {};
 
@@ -14,16 +25,18 @@ const PREFIX = '?';
 
 bot.on('ready', () => {
     console.log('This bot is on!');
+    bot.user.setActivity('FoxBot', { type: 'LISTENING' }).catch(console.error);
 });
 
 
 bot.on('message', message => {
     let args = message.content.substring(PREFIX.length).split(" ");
     console.log(args);
+    if (!message.content.startsWith(PREFIX) || message.author.bot) return;
     if (message.content.startsWith(PREFIX)) {
         switch (args[0]) {
             case 'ping':
-                message.channel.sendMessage('pong!');
+                bot.commands.get('ping').execute(message,args);
                 break;
 
             case 'play':
@@ -81,8 +94,38 @@ bot.on('message', message => {
                 }
                 if (message.guild.connection) message.guild.voiceConnection.disconnect();
                 break;
+            case 'image':
+                image(message);
+                break;
         }
     }
 })
 
+function image(message) {
+    var options = {
+        url: "http://results.dogpile.com/serp?qc=images&q=" + "dogs",
+        method: "GET",
+        header: {
+            "Accept": "text/html",
+            "User-Agent": "Chrome"
+        }
+    };
+
+    request(options, function (error, response, responseBody) {
+        if (error)
+            return;
+
+        $ = cheerio.load(responseBody);
+        var links = $(".image a.link");
+        var urls = new Array(links.length).fill(0).map((v, i) => links.eq(i).attr("href"));
+
+        console.log(urls);
+        if (!urls.length) {
+            return;
+        }
+
+        message.channel.send(urls[Math.floor(Math.random() * urls.length)]);
+    });
+}
 bot.login(process.env.token);
+//bot.login(token);
