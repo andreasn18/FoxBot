@@ -9,7 +9,6 @@
   "author": "Fox",
   "license": "ISC",
   "dependencies": {
-    "@discordjs/opus": "^0.3.2",
     "cheerio": "^1.0.0-rc.3",
     "discord.js": "^12.3.1",
     "opusscript": "0.0.7",
