@@ -40,40 +40,7 @@ bot.on('message', message => {
                 break;
 
             case 'play':
-                function play(connection, message) {
-                    var server = servers[message.guild.id];
-
-                    server.dispatcher = connection.play(ytdl(server.queue[0], { filter: "audioonly" }));
-
-                    server.queue.shift();
-                    server.dispatcher.on("end", function () {
-                        if (server.queue[0]) {
-                            play(connection, message);
-                        }
-                        else {
-                            connection.disconnect();
-                        }
-                    });
-                }
-                if (!args[1]) {
-                    message.channel.send("You need to provide a link!");
-                    return;
-                }
-                if (!message.member.voice.channel) {
-                    message.channel.send("You must be a channel to play a bot!");
-                    return;
-                }
-                if (!servers[message.guild.id]) servers[message.guild.id] = {
-                    queue: []
-                }
-
-                var server = servers[message.guild.id];
-
-                server.queue.push(args[1]);
-
-                if (!message.guild.voiceConnection) message.member.voice.channel.join().then(function (connection) {
-                    play(connection, message);
-                })
+                bot.commands.get('play').execute(message,args);
                 break;
 
             case 'skip':
@@ -101,32 +68,29 @@ bot.on('message', message => {
     }
 })
 
-function image(message) {
+function image(message){
     var options = {
-        url: "https://yandex.com/images/search?text=" + "anime",
-        method: "GET",
+        url: 'http://results.dogpile.com/serp?qc=images&q=' + "anime",
+        method: 'GET',
         headers: {
-            "Accept": "text/html",
-            "User-Agent": "Chrome"
+            'Accept': 'text/html',
+            'User-Agent': 'Chrome'
         }
+        
     };
-
     request(options, function(error, response, responseBody){
         if (error){
             return;
         }
-
-        $ = cheerio.load(responseBody);
-        var links = $(".image a.link");
-        var urls = new Array(links.length).fill(0).map((v, i) => links.eq(i).attr("href"));
-
+        lala = cheerio.load(responseBody);
+        var links = lala('.image a.link');
+        var urls = new Array(links.length).fill(0).map((v, i) => links.eq(i).attr('href'));
         console.log(urls);
-        if (!urls.length) {
+        if (!urls.length){
             return;
         }
-
         message.channel.send(urls[Math.floor(Math.random() * urls.length)]);
     });
 }
-bot.login(process.env.token);
-//bot.login(token);
+//bot.login(process.env.token);
+bot.login(token);
