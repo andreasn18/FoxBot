@@ -8,8 +8,15 @@ const bot = new Discord.Client();
 const ytdl = require("ytdl-core");
 const cheerio = require('cheerio');
 const request = require('request');
+const ownerID = '620973005266223104';
 const fs = require('fs');
+const active = new Map();
 bot.commands = new Discord.Collection();
+
+let ops = {
+    ownerID: ownerID,
+    active: active
+}
 
 const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
@@ -36,11 +43,18 @@ bot.on('message', message => {
     if (message.content.startsWith(PREFIX)) {
         switch (args[0]) {
             case 'ping':
-                bot.commands.get('ping').execute(message,args);
+                bot.commands.get('ping').execute(message, args);
+                break;
+
+            case 'search':
+                bot.commands.get('search').execute(message, args);
                 break;
 
             case 'play':
-                bot.commands.get('play').execute(message,args);
+                bot.commands.get('play').execute(bot, ops, message, args);
+                break;
+            case 'queue':
+                bot.commands.get('queue').execute(bot, ops, message, args);
                 break;
 
             case 'skip':
@@ -68,7 +82,7 @@ bot.on('message', message => {
     }
 })
 
-function image(message){
+function image(message) {
     var options = {
         url: 'http://results.dogpile.com/serp?qc=images&q=' + "anime",
         method: 'GET',
@@ -76,17 +90,17 @@ function image(message){
             'Accept': 'text/html',
             'User-Agent': 'Chrome'
         }
-        
+
     };
-    request(options, function(error, response, responseBody){
-        if (error){
+    request(options, function (error, response, responseBody) {
+        if (error) {
             return;
         }
         lala = cheerio.load(responseBody);
         var links = lala('.image a.link');
         var urls = new Array(links.length).fill(0).map((v, i) => links.eq(i).attr('href'));
         console.log(urls);
-        if (!urls.length){
+        if (!urls.length) {
             return;
         }
         message.channel.send(urls[Math.floor(Math.random() * urls.length)]);
