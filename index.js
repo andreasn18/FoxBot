@@ -38,7 +38,7 @@ bot.on('ready', () => {
 
 bot.on('message', message => {
     let args = message.content.substring(PREFIX.length).trim().split(" ");
-    console.log(args);
+    //console.log(args);
     if (!message.content.startsWith(PREFIX) || message.author.bot) return;
     if (message.content.startsWith(PREFIX)) {
         switch (args[0]) {
@@ -47,20 +47,27 @@ bot.on('message', message => {
                 break;
 
             case 'search':
-                bot.commands.get('search').execute(message, args);
+                bot.commands.get('search').execute(bot, ops, message, args);
                 break;
 
             case 'play':
+                args[0] = args[1]
                 bot.commands.get('play').execute(bot, ops, message, args);
                 break;
-            case 'queue':
+            case 'queue':~
                 bot.commands.get('queue').execute(bot, ops, message, args);
                 break;
 
             case 'skip':
-                var server = servers[message.guild.id];
-                if (server.dispatcher) server.dispatcher.end();
-                message.channel.send("Skipped the song");
+                bot.commands.get('skip').execute(bot, ops, message, args);
+                break;
+
+            case 'resume':
+                bot.commands.get('resume').execute(bot, ops, message, args);
+                break;
+
+            case 'pause':
+                bot.commands.get('pause').execute(bot, ops, message, args);
                 break;
 
             case 'stop':

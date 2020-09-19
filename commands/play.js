@@ -6,12 +6,12 @@ module.exports = {
     async execute(bot, ops, message, args) {        
         if (!message.member.voice.channel) return message.channel.send('Please connect to a voice channel');
         //if (message.guild.me.voice.channel) return message.channel.send('Sorry, the bot is already connected');
-
-        let validate = await ytdl.validateURL(args[1]);
+        console.log(args);
+        let validate = await ytdl.validateURL(args[0]);
 
         if(!validate) return message.channel.send('Sorry, please input a **valid** url');
 
-        let info = await ytdl.getInfo(args[1]);
+        let info = await ytdl.getInfo(args[0]);
 
         let data = ops.active.get(message.guild.id) || {};
 
@@ -22,7 +22,7 @@ module.exports = {
         data.queue.push({
             songTitle: info.videoDetails.title,
             requester: message.author.tag,
-            url: args[1],
+            url: args[0],
             announceChannel: message.channel.id
         });
 
