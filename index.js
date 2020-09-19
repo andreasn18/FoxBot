@@ -47,6 +47,7 @@ bot.on('message', message => {
                 break;
 
             case 'search':
+                args.splice(0,1);
                 bot.commands.get('search').execute(bot, ops, message, args);
                 break;
 

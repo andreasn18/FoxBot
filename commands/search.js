@@ -3,7 +3,7 @@ module.exports = {
     name: 'search',
     description: "this is a search command",
     execute(bot, ops, message, args){
-        search(args[1], function(err, res) {
+        search(args.join(' '), function(err, res) {
             if (err) return message.channel.send('Sorry, something went wrong');
 
             let videos = res.videos.slice(0,10);
