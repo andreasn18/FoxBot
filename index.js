@@ -32,7 +32,7 @@ const PREFIX = '?';
 
 bot.on('ready', () => {
     console.log('This bot is on!');
-    bot.user.setActivity('FoxBot', { type: 'LISTENING' }).catch(console.error);
+    bot.user.setActivity('Kekeyi', { type: 'LISTENING' }).catch(console.error);
 });
 
 
