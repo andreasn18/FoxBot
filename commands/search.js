@@ -27,7 +27,7 @@ module.exports = {
                 //console.log([this.videos[parseInt(m.content)-1].url]);
                 console.log(parseInt(m.videos) - 1);
                 // for (var i in m) {
-                    commandFile.execute(bot, ops, message, [this.videos[parseInt(i.content) - 1].url]);
+                    commandFile.execute(bot, ops, message, [this.videos[parseInt(m.content) - 1].url]);
                 //}
             });
         });
