@@ -25,7 +25,7 @@ module.exports = {
             collector.once('collect', function (m) {
                 let commandFile = require(`./play.js`);
                 //console.log([this.videos[parseInt(m.content)-1].url]);
-                console.log(parseInt(m.videos) - 1);
+                console.log(m);
                 // for (var i in m) {
                     commandFile.execute(bot, ops, message, [this.videos[parseInt(m.content) - 1].url]);
                 //}
