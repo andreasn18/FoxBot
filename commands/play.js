@@ -3,7 +3,7 @@ const ytdl = require("ytdl-core");
 module.exports = {
     name: 'play',
     description: "this is a play command",
-    async execute(bot, ops, message, args) {        
+    async execute(bot, ops, message, args) {
         if (!message.member.voice.channel) return message.channel.send('Please connect to a voice channel');
         //if (message.guild.me.voice.channel) return message.channel.send('Sorry, the bot is already connected');
         console.log(args);
