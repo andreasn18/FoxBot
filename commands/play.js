@@ -5,7 +5,6 @@ module.exports = {
     description: "this is a play command",
     async execute(bot, ops, message, args) {
         if (!message.member.voice.channel) return message.channel.send('Please connect to a voice channel');
-        if(message.member.voiceChannel != message.guild.member.channel) data.connection = await message.member.voice.channel.join();
         //if (message.guild.me.voice.channel) return message.channel.send('Sorry, the bot is already connected');
         console.log(args);
         let validate = await ytdl.validateURL(args[0]);
@@ -17,6 +16,7 @@ module.exports = {
         let data = ops.active.get(message.guild.id) || {};
 
         if (!data.connection) data.connection = await message.member.voice.channel.join();
+        if(message.member.voice.channel != message.guild.member.channel) data.connection = await message.member.voice.channel.join();
         if (!data.queue) data.queue = [];
         data.guildID = message.guild.id;
 

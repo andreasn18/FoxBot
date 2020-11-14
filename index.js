@@ -37,7 +37,7 @@ bot.on('ready', () => {
 
 
 bot.on('message', message => {
-    let args = message.content.substring(PREFIX.length).trim().split(" ");
+    let args = message.content.substring(PREFIX.length).toLowerCase().trim().split(" ");
     //console.log(args);
     if (!message.content.startsWith(PREFIX) || message.author.bot) return;
     if (message.content.startsWith(PREFIX)) {
@@ -72,17 +72,19 @@ bot.on('message', message => {
                 break;
 
             case 'stop':
-                var server = servers[message.guild.id];
-                if (message.guild.voiceConnection) {
-                    for (var i = server.queue.length - 1; i >= 0; i--) {
-                        server.queue.splice(i, 1);
-                    }
-                    server.dispatcher.end();
-                    message.channel.send("Ending the queue. Leaving the voice channel");
-                    console.log('stopped the queue');
-                }
-                if (message.guild.connection) message.guild.voiceConnection.disconnect();
+                bot.commands.get('stop').execute(bot, ops, message, args);
                 break;
+                // var server = servers[message.guild.id];
+                // if (message.guild.voice.connection) {
+                //     for (var i = server.queue.length - 1; i >= 0; i--) {
+                //         server.queue.splice(i, 1);
+                //     }
+                //     server.dispatcher.disconnect();
+                //     message.channel.send("Ending the queue. Leaving the voice channel");
+                //     console.log('stopped the queue');
+                // }
+                // if (message.guild.connection) message.guild.voiceConnection.disconnect();
+                // break;
             case 'image':
                 image(message);
                 break;

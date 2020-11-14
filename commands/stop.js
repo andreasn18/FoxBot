@@ -1,6 +1,6 @@
 module.exports = {
-    name: 'pause',
-    description: "this is a pause command",
+    name: 'stop',
+    description: "this is a stop command",
     execute(bot, ops, message, args){
         let fetched = ops.active.get(message.guild.id);
 
@@ -8,10 +8,9 @@ module.exports = {
 
         if(message.member.voice.channel != message.guild.me.voice.channel) return message.channel.send('Sorry, you currently aren\'t in the same channel as the bot!');
 
-        if(fetched.dispatcher.paused) return message.channel.send('This music is already paused');
+        ops.active.delete(fetched.guildID);
+        fetched.connection.disconnect();
 
-        fetched.dispatcher.pause();
-
-        message.channel.send(`Successfully paused ${fetched.queue[0].songTitle}`);
+        message.channel.send(`Successfully stop!`);
     }
 }
