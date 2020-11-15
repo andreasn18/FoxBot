@@ -27,7 +27,7 @@ for (const file of commandFiles) {
 
 var servers = {};
 
-const token = 'NjIwOTczMDA1MjY2MjIzMTA0.XXekLQ.wZnnooagSPigAnuBzx9c4EhJxzo';
+//const token = 'NjIwOTczMDA1MjY2MjIzMTA0.XXekLQ.wZnnooagSPigAnuBzx9c4EhJxzo';
 const PREFIX = '?';
 
 bot.on('ready', () => {
@@ -116,5 +116,5 @@ function image(message) {
         message.channel.send(urls[Math.floor(Math.random() * urls.length)]);
     });
 }
-//bot.login(process.env.token);
-bot.login(token);
+bot.login(process.env.token);
+//bot.login(token);
