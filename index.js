@@ -116,5 +116,5 @@ function image(message) {
         message.channel.send(urls[Math.floor(Math.random() * urls.length)]);
     });
 }
-bot.login(process.env.token);
-//bot.login(token);
+//bot.login(process.env.token);
+bot.login(token);

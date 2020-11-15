@@ -26,9 +26,10 @@ module.exports = {
                 let commandFile = require(`./play.js`);
                 //console.log([this.videos[parseInt(m.content)-1].url]);
                 //console.log(m);
-                for (var i=0; i< m.content.split(",").length; i++) {
-                    console.log(i);
-                    await commandFile.execute(bot, ops, message, [this.videos[parseInt(i)].url]);
+                for (var i=0; i < m.content.split(",").length; i++) {
+                    //console.log(m.content.split(",")[0]);
+                    //console.log(m.content);
+                    await commandFile.execute(bot, ops, message, [this.videos[parseInt(m.content.split(",")[i]-1)].url]);
                 }
             });
         });
