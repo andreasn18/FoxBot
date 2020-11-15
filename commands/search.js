@@ -17,7 +17,7 @@ module.exports = {
 
             message.channel.send(resp);
 
-            const filter = m => !isNaN(m.content) && m.content < videos.length + 1 && m.content > 0;
+            const filter = m => !isNaN(m.content) && m.content < videos.length + 1 && m.content > 0 || m.content.includes(',');
 
             const collector = message.channel.createMessageCollector(filter);
 
@@ -26,9 +26,10 @@ module.exports = {
                 let commandFile = require(`./play.js`);
                 //console.log([this.videos[parseInt(m.content)-1].url]);
                 console.log(m);
-                // for (var i in m) {
-                commandFile.execute(bot, ops, message, [this.videos[parseInt(m.content) - 1].url]);
-                //}
+                for (var i=0; i< m.content.split(",").length; i++) {
+                    // console.log(i);
+                    commandFile.execute(bot, ops, message, [this.videos[parseInt(i)].url]);
+                }
             });
         });
     }
