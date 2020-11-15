@@ -27,7 +27,7 @@ for (const file of commandFiles) {
 
 var servers = {};
 
-//const token = 'NjIwOTczMDA1MjY2MjIzMTA0.XXekLQ.wZnnooagSPigAnuBzx9c4EhJxzo';
+const token = 'NjIwOTczMDA1MjY2MjIzMTA0.XXekLQ.wZnnooagSPigAnuBzx9c4EhJxzo';
 const PREFIX = '?';
 
 bot.on('ready', () => {

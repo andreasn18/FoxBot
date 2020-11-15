@@ -29,7 +29,7 @@ module.exports = {
 
         if (!data.dispatcher) play(bot, ops, data);
         else{
-            message.channel.send(`Added to queue: ${data.queue[0].songTitle} | Requested by: ${data.queue[0].requester}`);
+            message.channel.send(`Added to queue: ${data.queue[data.queue.length-1].songTitle} | Requested by: ${data.queue[data.queue.length-1].requester}`);
         }
 
         ops.active.set(message.guild.id, data);
