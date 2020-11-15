@@ -22,13 +22,13 @@ module.exports = {
             const collector = message.channel.createMessageCollector(filter);
 
             collector.videos = videos
-            collector.once('collect', function (m) {
+            collector.once('collect', async function (m) {
                 let commandFile = require(`./play.js`);
                 //console.log([this.videos[parseInt(m.content)-1].url]);
                 console.log(m);
                 for (var i=0; i< m.content.split(",").length; i++) {
                     // console.log(i);
-                    commandFile.execute(bot, ops, message, [this.videos[parseInt(i)].url]);
+                    await commandFile.execute(bot, ops, message, [this.videos[parseInt(i)].url]);
                 }
             });
         });
